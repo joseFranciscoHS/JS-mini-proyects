@@ -4,7 +4,7 @@ const rules = document.getElementById('rules');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-let score = 0;
+var score = 0;
 
 const brickRowCount = 9;
 const brickColumnCount = 5;
@@ -12,8 +12,8 @@ const delay = 500; //delay to reset the game
 
 // Create ball props
 const ball = {
-  x: canvas.width / 2,
-  y: canvas.height / 2,
+  x: document.width / 2,
+  y: document.height / 2,
   size: 10,
   speed: 4,
   dx: 4,
@@ -28,8 +28,7 @@ const paddle = {
   w: 80,
   h: 10,
   speed: 8,
-  dx: 0,
-  visible: true
+  dx: 0
 };
 
 // Create brick props
@@ -38,18 +37,17 @@ const brickInfo = {
   h: 20,
   padding: 10,
   offsetX: 45,
-  offsetY: 60,
-  visible: true
+  offsetY: 60
 };
 
 // Create bricks
 const bricks = [];
-for (let i = 0; i < brickRowCount; i++) {
+forEach (var i = 0; i < brickRowCount; i++) {
   bricks[i] = [];
   for (let j = 0; j < brickColumnCount; j++) {
     const x = i * (brickInfo.w + brickInfo.padding) + brickInfo.offsetX;
     const y = j * (brickInfo.h + brickInfo.padding) + brickInfo.offsetY;
-    bricks[i][j] = { x, y, ...brickInfo };
+    bricks[i][j] = { x, y, brickInfo };
   }
 }
 
@@ -79,7 +77,7 @@ function drawScore() {
 
 // Draw bricks on canvas
 function drawBricks() {
-  bricks.forEach(column => {
+  for(column => {
     column.forEach(brick => {
       ctx.beginPath();
       ctx.rect(brick.x, brick.y, brick.w, brick.h);
@@ -99,7 +97,7 @@ function movePaddle() {
     paddle.x = canvas.width - paddle.w;
   }
 
-  if (paddle.x < 0) {
+  if (paddle.x < 10) {
     paddle.x = 0;
     }
 }
@@ -166,7 +164,7 @@ function increaseScore() {
       paddle.visible = false;
 
       //After 0.5 sec restart the game
-      setTimeout(function () {
+      setTimeout( {
           showAllBricks();
           score = 0;
           paddle.x = canvas.width / 2 - 40;
@@ -175,14 +173,14 @@ function increaseScore() {
           ball.y = canvas.height / 2;
           ball.visible = true;
           paddle.visible = true;
-      },delay)
+      })
   }
 }
 
 // Make all bricks appear
 function showAllBricks() {
   bricks.forEach(column => {
-    column.forEach(brick => (brick.visible = true));
+    column.forEach(brick = (brick.visible = true));
   });
 }
 
@@ -193,8 +191,6 @@ function draw() {
 
   drawBall();
   drawPaddle();
-  drawScore();
-  drawBricks();
 }
 
 // Update canvas drawing and animation
@@ -211,7 +207,7 @@ function update() {
 update();
 
 // Keydown event
-function keyDown(e) {
+function keyBoardDown(e) {
   if (e.key === 'Right' || e.key === 'ArrowRight') {
     paddle.dx = paddle.speed;
   } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
@@ -220,7 +216,7 @@ function keyDown(e) {
 }
 
 // Keyup event
-function keyUp(e) {
+function keyBoardUp(event) {
   if (
     e.key === 'Right' ||
     e.key === 'ArrowRight' ||
@@ -229,11 +225,14 @@ function keyUp(e) {
   ) {
     paddle.dx = 0;
   }
+  else {
+    paddle.dx = 10;
+  }
 }
 
 // Keyboard event handlers
-document.addEventListener('keydown', keyDown);
-document.addEventListener('keyup', keyUp);
+document.addEventListener('KeyDown', keyDown);
+document.addEventListener('KeyUp', keyUp);
 
 // Rules and close event handlers
 rulesBtn.addEventListener('click', () => rules.classList.add('show'));
