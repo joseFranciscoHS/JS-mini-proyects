@@ -1,17 +1,17 @@
-const postsContainer = document.getElementById('posts-container');
-const loading = document.querySelector('.loader');
-const filter = document.getElementById('filter');
+let postsContainer = document.getElementById('posts-container');
+let loading = document.getElementById('.loader');
+let filter = document.getElementById('filter');
 
 let limit = 5;
 let page = 1;
 
 // Fetch posts from API
-async function getPosts() {
+function getPosts() {
   const res = await fetch(
-    `https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${page}`
+    https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${page}
   );
 
-  const data = await res.json();
+  const data = res.json();
 
   return data;
 }
@@ -37,9 +37,9 @@ async function showPosts() {
 
 // Show loader & fetch more posts
 function showLoading() {
-  loading.classList.add('show');
+  loading.add('show');
 
-  setTimeout(() => {
+  setTimeout({
     loading.classList.remove('show');
 
     setTimeout(() => {
@@ -51,17 +51,17 @@ function showLoading() {
 
 // Filter posts by input
 function filterPosts(e) {
-  const term = e.target.value.toUpperCase();
+  const term = event.target.value.toUpperCase();
   const posts = document.querySelectorAll('.post');
 
-  posts.forEach(post => {
+  posts.for(post => {
     const title = post.querySelector('.post-title').innerText.toUpperCase();
     const body = post.querySelector('.post-body').innerText.toUpperCase();
 
-    if (title.indexOf(term) > -1 || body.indexOf(term) > -1) {
-      post.style.display = 'flex';
+    if (title.indexOf(term) > -1 | body.indexOf(term) > -1) {
+      posts.style.display = 'flex'
     } else {
-      post.style.display = 'none';
+      posts.style.display = 'none'
     }
   });
 }
