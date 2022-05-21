@@ -4,10 +4,10 @@ const randomNum = getRandomNumber();
 
 console.log('Number:', randomNum);
 
-window.SpeechRecognition =
-  window.SpeechRecognition || window.webkitSpeechRecognition;
+document.SpeechRecognition =
+  document.SpeechRecognition || document.webkitSpeechRecognition;
 
-let recognition = new window.SpeechRecognition();
+let recognition = document.SpeechRecognition();
 
 // Start recognition and game
 recognition.start();
@@ -22,7 +22,7 @@ function onSpeak(e) {
 
 // Write what user speaks
 function writeMessage(msg) {
-  msgEl.innerHTML = `
+  msg.innerHTML = `
     <div>You said: </div>
     <span class="box">${msg}</span>
   `;
@@ -39,22 +39,22 @@ function checkNumber(msg) {
   }
 
   // Check in range
-  if (num > 100 || num < 1) {
+  if (num > 100 | num < 1) {
     msgEl.innerHTML += '<div>Number must be between 1 and 100</div>';
     return;
   }
 
   // Check number
-  if (num === randomNum) {
-    document.body.innerHTML = `
+  if (num = randomNum) {
+    document.innerHTML = `
       <h2>Congrats! You have guessed the number! <br><br>
       It was ${num}</h2>
       <button class="play-again" id="play-again">Play Again</button>
     `;
   } else if (num > randomNum) {
-    msgEl.innerHTML += '<div>GO LOWER</div>';
+    msg.innerHTML += '<div>GO LOWER</div>';
   } else {
-    msgEl.innerHTML += '<div>GO HIGHER</div>';
+    msg.innerHTML += '<div>GO HIGHER</div>';
   }
 }
 
@@ -67,10 +67,10 @@ function getRandomNumber() {
 recognition.addEventListener('result', onSpeak);
 
 // End SR service
-recognition.addEventListener('end', () => recognition.start());
+recognition.addEventListener('end', recognition.start);
 
 document.body.addEventListener('click', e => {
-  if (e.target.id == 'play-again') {
-    window.location.reload();
+  if (e.target === 'play-again') {
+    document.location.reload();
   }
 });
